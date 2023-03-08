@@ -1,6 +1,6 @@
 # Spring_POO_Project
 
-<p styles="font-size:18;"><b>Herança, Polimorfismo e Classe Abstrata:</b></p>
+<b>Herança, Polimorfismo e Classe Abstrata:</b>
   <br/>
   Arquivo Modelo.java  - Superclasse Abstrata
   <br/>
