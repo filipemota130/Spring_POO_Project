@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.system.manage.models.modelo.Modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -13,9 +14,16 @@ import jakarta.persistence.InheritanceType;
 public class Aluno extends Modelo {
     
     // Atributos.
+    @Column(name = "Curso")
     private String curso;
+
+    @Column(name = "CPF")
     private String cpf;
+
+    @Column(name = "Notas")
     private ArrayList<String> notas = new ArrayList<String>();
+
+    @Column(name = "Status")
     private boolean statusCurso = true;
 
 
@@ -27,27 +35,27 @@ public class Aluno extends Modelo {
         return cpf;
     }
 
-    public void setAcademicalInfo(String curso) {
+    public void setAcademicalInfo(String curso){
         this.curso = curso;
     }
 
-    public String getAcademicalInfo() {
+    public String getAcademicalInfo(){
         return curso;
     }
 
-    public ArrayList<String> getList() {
+    public ArrayList<String> getList(){
         return this.notas;
     }
 
-    public void setList(String nota) {
+    public void setList(String nota){
         this.notas.add(nota);
     }
 
-    public void setBool(boolean statusCurso) {
+    public void setBool(boolean statusCurso){
         this.statusCurso = statusCurso;
     }
 
-    public boolean getBool() {
+    public boolean getBool(){
         return statusCurso;
     }
 

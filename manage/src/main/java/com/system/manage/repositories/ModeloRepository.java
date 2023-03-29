@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.system.manage.models.modelo.Modelo;
 
-public interface professorRepository extends JpaRepository<Modelo,Long> {
+public interface ModeloRepository extends JpaRepository<Modelo,Long> {
     
 }

@@ -15,16 +15,22 @@ public class Professor extends Modelo {
 
     @Column(name = "formacao")
     private String formacao;
+
+    @Column(name = "CPF")
     private String cpf;
+
+    @Column(name = "Disciplinas")
     private ArrayList<String> lecionando = new ArrayList<String>();
-    private boolean atuando;
+
+    @Column(name = "Status")
+    private boolean atuacao;
 
     public boolean getBool() {
-        return atuando;
+        return atuacao;
     }
 
-    public void setBool(boolean atuando) {
-        this.atuando = atuando;
+    public void setBool(boolean atuacao) {
+        this.atuacao = atuacao;
     }
 
     public ArrayList<String> getList() {
