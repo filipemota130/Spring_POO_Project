@@ -11,16 +11,16 @@ public abstract class Modelo{
     
     @Id
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name="nome")
     private String nome;
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return this.id;
     }
 

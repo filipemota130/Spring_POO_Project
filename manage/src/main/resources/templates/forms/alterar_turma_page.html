@@ -12,21 +12,22 @@
 <body>
     <h1>
         <center>
-            CADASTRO DE TURMA   
+            EDIÇÃO DE TURMA   
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/turma_form" th:object="${turma}">
+        <form method="post" action="/alterar_turma" th:object="${turma}">
+            <input type="hidden" th:field="*{id}"/>
                 <label>ID</label>
                 <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123"/>
+                    <input readonly="readonly" class='form-control' name="id" type="number" placeholder="Edição desabilitada" th:field="*{id}"/>
                 </div>                
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I"/>
+                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" th:field="*{nome}"/>
                 </div>            
                 <label>PROFESSOR RESPONSÁVEL</label>
-                <input class='form-control' name="academic" type="text" placeholder="Nome completo" />
+                <input class='form-control' name="academic" type="text" placeholder="Nome completo"/>
                 <label>ALUNOS</label>
                 <div class="input-group">
                     <input class='form-control' name="list" type="text" placeholder="Ex.: Aluno; aluno; ..."/>

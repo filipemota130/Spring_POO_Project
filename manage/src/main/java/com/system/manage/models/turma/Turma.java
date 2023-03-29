@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import com.system.manage.models.modelo.Modelo;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Turma extends Modelo {
     
     @Column(name = "diaseHorarios")

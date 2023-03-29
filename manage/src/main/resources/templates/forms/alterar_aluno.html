@@ -16,14 +16,15 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/aluno_form" th:object="${aluno}">
+        <form method="post" action="/alterar_aluno_page" th:object="${aluno}">
+            <input type="hidden" th:field="*{id}" />
             <label>NOME</label>
             <div class="input-group">
                 <input class='form-control' name="nome" type="text" placeholder="Nome completo"/>
             </div>
             <label>MATRÍCULA</label>
             <div class="input-group">
-                <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123"/>
+                <input class='form-control' readonly="readonly" name="id" type="number" placeholder="Edição desabilitada"/>
             </div>            
             <label>CPF</label>
             <div class="input-group">
@@ -38,7 +39,7 @@
             </select>
             <label>NOTAS</label>
             <div class="input-group">
-                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                <input class='form-control' name="list" type="text" placeholder="n; n; ...">
             </div>
             <label>STATUS DO CURSO</label>
             <script>

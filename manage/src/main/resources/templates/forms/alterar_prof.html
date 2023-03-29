@@ -5,37 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Turma</title>
+    <title>Cadastro de Professor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
     <h1>
         <center>
-            CADASTRO DE TURMA   
+            EDIÇÃO DE PROFESSOR    
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/turma_form" th:object="${turma}">
-                <label>ID</label>
-                <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123"/>
-                </div>                
+        <form method="post" action="/alterar" th:object="${prof}" autocomplete="off">
+            <input type="hidden" th:field="*{id}" />
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I"/>
+                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}"/>
                 </div>            
-                <label>PROFESSOR RESPONSÁVEL</label>
-                <input class='form-control' name="academic" type="text" placeholder="Nome completo" />
-                <label>ALUNOS</label>
+                <label>CPF</label>
                 <div class="input-group">
-                    <input class='form-control' name="list" type="text" placeholder="Ex.: Aluno; aluno; ..."/>
+                    <input readonly="readonly" class='form-control' th:field="*{id}" name="id" type="number" placeholder="Edição desabilitada"/>
                 </div>
-                <label>HORÁRIO</label>
+                <label>LECIONANDO</label>
                 <div class="input-group">
-                    <input class='form-control' name="code" type="text" placeholder="Ex.: dia/n:nn-n:nn; ..."/>
+                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..."/>
                 </div>
-                <label>EXISTÊNCIA DE MONITOR(ES)</label>
+                <label>ATUAÇÃO</label>
                 <script>
                     function onlyOne(checkbox) {
                         var checkboxes = document.getElementsByName('bool')
@@ -45,8 +40,8 @@
                     }
                 </script>
                 <div type="input-group">
-                    <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Existe(m) </label>
-                    <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Não existe(m) </label>
+                    <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Ativo(a) </label>
+                    <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Afastado(a) </label>
                 </div>
                 <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
