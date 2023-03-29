@@ -3,13 +3,10 @@ package com.system.manage.models.modelo;
 import java.util.ArrayList;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@MappedSuperclass
 public abstract class Modelo{
     
     @Id
@@ -35,6 +32,29 @@ public abstract class Modelo{
         return nome;
     }
 
-    public abstract ArrayList<String> Ver_info();
+    public ArrayList<String> Ver_info() {
+        ArrayList<String> ver_info = new ArrayList<String>();
+        ver_info.add(Long.toString(getId()));
+        ver_info.add(getNome());
+        ver_info.add(getCode());
+        ver_info.add(getAcademicalInfo());
+        return ver_info;
+    }
+
+    public abstract String getAcademicalInfo();
+
+    public abstract void setAcademicalInfo(String E);
+    
+    public abstract String getCode();
+
+    public abstract void setCode(String E);
+
+    public abstract ArrayList<String> getList();
+
+    public abstract void setList(String E);
+
+    public abstract boolean getBool();
+
+    public abstract void setBool(boolean E);
 
 }

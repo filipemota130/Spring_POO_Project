@@ -5,30 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Professor</title>
+    <title>Cadastro de Aluno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container center mt-5">
-        <form method="post" action="/professor_form" th:object="${prof}">
-                <label>CPF</label>
-                <div class="input-group">
-                    <input class='form-control' name="id" type="number"/>
-                </div>
-                <label>NOME</label>
-                <div class="input-group">
-                    <input class='form-control' name="nome" type="text"/>
-                </div>
-                <label>FORMAÇÃO</label>
-                <div class="input-group">
-                    <input class='form-control' name="formacao" type="text">
-                </div>
-                <button class="btn btn-success mt-3 ms-auto">Enviar</button>
+        <h3></h3>
+        <form method="post" action="/aluno_form" th:object="${aluno}">
+            <label>Matricula</label>
+            <div class="input-group">
+                <input class='form-control' name="id" type="number" />
+            </div>
+            <label>Nome</label>
+            <div class="input-group">
+                <input class='form-control' name="nome" type="text" />
+            </div>
+            <label>Curso</label>
+            <div class="input-group">
+                <input class='form-control' name="curso" type="text">
+            </div>
+            <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

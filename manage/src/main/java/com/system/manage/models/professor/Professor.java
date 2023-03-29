@@ -6,27 +6,49 @@ import com.system.manage.models.modelo.Modelo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Professor extends Modelo {
 
-    @Column(name="formacao")
+    @Column(name = "formacao")
     private String formacao;
+    private String cpf;
+    private ArrayList<String> lecionando = new ArrayList<String>();
+    private boolean atuando;
 
-    public void setFormacao(String formacao) {
+    public boolean getBool() {
+        return atuando;
+    }
+
+    public void setBool(boolean atuando) {
+        this.atuando = atuando;
+    }
+
+    public ArrayList<String> getList() {
+        return lecionando;
+    }
+
+    public void setList(String disc) {
+        this.lecionando.add(disc);
+    }
+
+    public String getCode() {
+        return cpf;
+    }
+
+    public void setCode(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setAcademicalInfo(String formacao) {
         this.formacao = formacao;
     }
 
-    public String getFormacao() {
+    public String getAcademicalInfo() {
         return this.formacao;
-    }
-
-    public ArrayList<String> Ver_info() {
-        ArrayList<String> ver_info = new ArrayList<String>();
-        ver_info.add(Long.toString(getId()));
-        ver_info.add(getNome());
-        ver_info.add(getFormacao());
-        return ver_info;
     }
 
 }

@@ -7,33 +7,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.system.manage.models.aluno.Aluno;
 import com.system.manage.models.modelo.Modelo;
-import com.system.manage.models.professor.Professor;
 import com.system.manage.repositories.professorRepository;
 
 @Controller
-public class professorController {
-
+public class alunoController {
+    
     @Autowired
     professorRepository repo;
-
-    @GetMapping("/professor")
-    public ModelAndView professor_form(Professor professor) {
+    
+    @GetMapping("/alunos")
+    public ModelAndView Aluno_form(Aluno aluno) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("forms/professor_form");
-        mv.addObject("prof", new Professor());
+        mv.setViewName("forms/aluno_form");
+        mv.addObject("aluno", new Aluno());
         return mv;
     }
-    
-    @PostMapping("professor_form")
-    public ModelAndView cadastro(@RequestParam("id") Long id, @RequestParam("nome") String nome,
-            @RequestParam("formacao") String formacao) {
+
+    @PostMapping("aluno_form")
+    public ModelAndView cadastro(@RequestParam("id") Long id, @RequestParam("nome") String nome, @RequestParam("curso") String curso) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
-        Modelo savior = new Professor();
+        Modelo savior = new Aluno();
         savior.setId(id);
         savior.setNome(nome);
-        savior.setAcademicalInfo(formacao);
+        savior.setAcademicalInfo(curso);
         savior.setCode("133.721.724-77");
         savior.setList("materia1");
         savior.setList("materia2");
