@@ -1,7 +1,5 @@
 package com.system.manage.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +58,7 @@ public class turmaController {
     public ModelAndView alterar(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("forms/alterar_turma_page");
-        Optional<Turma> turma = repo.findById(id);
+        Turma turma = repo.getReferenceById(id);
         mv.addObject("turma", turma);
         return mv;
     }

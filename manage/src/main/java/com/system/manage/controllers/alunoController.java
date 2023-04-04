@@ -1,7 +1,5 @@
 package com.system.manage.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.system.manage.models.aluno.Aluno;
 import com.system.manage.models.aluno.Boletim.Boletim;
+import com.system.manage.models.aluno.HistoricoAnalitico.historicoAnalitico;
 import com.system.manage.repositories.alunoRepository;
 
 @Controller
@@ -31,7 +30,7 @@ public class alunoController {
     @PostMapping("aluno_form")
     public ModelAndView cadastro_aluno(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
-            @RequestParam("list") String notas, @RequestParam("bool") boolean status) {
+            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
         Aluno savior = new Aluno();
@@ -42,6 +41,10 @@ public class alunoController {
         String[] new_notas = notas.split(";");
         for (int i = 0; i < new_notas.length; i++) {
             savior.setList(new_notas[i]);
+        }
+        String[] new_notas_pagas = pagas.split(";");
+        for (int i = 0; i < new_notas_pagas.length; i++) {
+            savior.setDisciplinasPagas(new_notas_pagas[i]);
         }
         savior.setBool(status);
         repo.save(savior);
@@ -77,6 +80,22 @@ public class alunoController {
         }
         mv.addObject("aluno", aluno);
         mv.addObject("boletim", bole);
+        return mv;
+    }
+    
+    @GetMapping(value = "/historico_aluno/{id}")
+    public ModelAndView historico_alunos(@PathVariable("id") Integer id) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("home/Historico_page");
+        Aluno aluno = repo.getReferenceById(id);
+        historicoAnalitico histo = new historicoAnalitico();
+        histo.setId(id);
+        for (int i = 0; i < aluno.getDisciplinasPagas().size(); i++) {
+            histo.setDisciplinasPagas(aluno.getDisciplinasPagas().get(i));
+        }
+        histo.setCoeficiente(aluno.getDisciplinasPagas());
+        mv.addObject("aluno", aluno);
+        mv.addObject("historico", histo);
         return mv;
     }
 

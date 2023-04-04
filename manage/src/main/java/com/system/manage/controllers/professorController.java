@@ -1,7 +1,5 @@
 package com.system.manage.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +56,7 @@ public class professorController {
     public ModelAndView alterar(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("forms/alterar_prof");
-        Optional<Professor> prof = repo.findById(id);
+        Professor prof = repo.getReferenceById(id);
         mv.addObject("prof", prof);
         return mv;
     }

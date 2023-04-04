@@ -26,6 +26,8 @@ public class Aluno extends Modelo {
     @Column(name = "Status")
     private boolean statusCurso = true;
 
+    @Column(name = "Disciplinas_Pagas")
+    public ArrayList<String> Disciplinas_Pagas = new ArrayList<String>();
 
     public void setCode(String cpf) {
         this.cpf = cpf;
@@ -55,8 +57,16 @@ public class Aluno extends Modelo {
         this.statusCurso = statusCurso;
     }
 
-    public boolean getBool(){
+    public boolean getBool() {
         return statusCurso;
+    }
+    
+    public ArrayList<String> getDisciplinasPagas() {
+        return this.Disciplinas_Pagas;
+    }
+    
+    public void setDisciplinasPagas(String disciplinasPaga) {
+        this.Disciplinas_Pagas.add(disciplinasPaga);
     }
 
 }
