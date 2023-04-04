@@ -19,7 +19,7 @@
                 <th>NOME</th>
                 <th>CPF</th>
                 <th>CURSO</th>
-                <th>BOLETIM/NOTAS</th>
+                <th>NOTAS</th>
                 <th>STATUS</th>
                 <th></th>
             </thead>
@@ -53,6 +53,11 @@
                         <a th:href="@{remover_aluno/{id}(id=${alunos.id})}">
                             <button class="btn btn-danger">
                                 Remover
+                            </button>
+                        </a>
+                        <a th:href="@{boletim_aluno/{id}(id=${alunos.id})}">
+                            <button class="btn btn-dark">
+                                Boletim
                             </button>
                         </a>
                     </td>

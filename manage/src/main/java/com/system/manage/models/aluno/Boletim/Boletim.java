@@ -1,6 +1,7 @@
 package com.system.manage.models.aluno.Boletim;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.system.manage.models.aluno.Aluno;
 
@@ -8,17 +9,8 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Boletim extends Aluno {
+
     int id;
-    ArrayList<String> disciplinasAtuais;
-    ArrayList<String> disciplinasPagas;
-
-    public ArrayList<String> getDisciplinasPagas() {
-        return disciplinasPagas;
-    }
-
-    public void setDisciplinasPagas(ArrayList<String> disciplinasPagas) {
-        this.disciplinasPagas = disciplinasPagas;
-    }
 
     public int getIdentificador() {
         return id;
@@ -28,11 +20,13 @@ public class Boletim extends Aluno {
         this.id = id;
     }
 
-    public ArrayList<String> getDisciplinasAtuais() {
-        return disciplinasAtuais;
-    }
-
-    public void setDisciplinasAtuais(String disciplina) {
-        this.disciplinasAtuais.add(disciplina);
+    @Override
+    public ArrayList<String> getList() {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < this.notas.size(); i++) {
+            String[] separador = this.notas.get(i).split(":");
+            list.add("Nota n°"+ i + " ------ " + separador[0] + " ------ " +separador[1] );
+        }
+        return list;
     }
 }

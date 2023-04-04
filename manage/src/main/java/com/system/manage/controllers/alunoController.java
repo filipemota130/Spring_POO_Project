@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.system.manage.models.aluno.Aluno;
+import com.system.manage.models.aluno.Boletim.Boletim;
 import com.system.manage.repositories.alunoRepository;
 
 @Controller
@@ -59,14 +60,41 @@ public class alunoController {
     public ModelAndView alterar_alunos(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("forms/alterar_aluno_page");
-        Optional<Aluno> aluno = repo.findById(id);
+        Aluno aluno = repo.getReferenceById(id);
         mv.addObject("aluno", aluno);
         return mv;
     }
 
-    @PostMapping("/alterar_aluno")
-    public ModelAndView alterar_alunos(Aluno aluno) {
+    @GetMapping(value = "/boletim_aluno/{id}")
+    public ModelAndView boletim_alunos(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("home/Boletim_page");
+        Aluno aluno = repo.getReferenceById(id);
+        Boletim bole = new Boletim();
+        bole.setId(id);
+        for (int i = 0; i < aluno.getList().size(); i++) {
+            bole.setList(aluno.getList().get(i));
+        }
+        mv.addObject("aluno", aluno);
+        mv.addObject("boletim", bole);
+        return mv;
+    }
+
+    @PostMapping("/alterar_aluno")
+    public ModelAndView alterar_alunos(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
+            @RequestParam("academic") String curso, @RequestParam("code") String cpf,
+            @RequestParam("list") String notas, @RequestParam("bool") boolean status) {
+        ModelAndView mv = new ModelAndView();
+        Aluno aluno = new Aluno();
+        aluno.setAcademicalInfo(curso);
+        aluno.setBool(status);
+        aluno.setId(id);
+        aluno.setNome(nome);
+        aluno.setCode(cpf);
+        String[] new_notas = notas.split(";");
+        for (int i = 0; i < new_notas.length; i++) {
+            aluno.setList(new_notas[i]);
+        }
         repo.save(aluno);
         mv.setViewName("redirect:/list_aluno");
         return mv;

@@ -15,13 +15,13 @@ public class Aluno extends Modelo {
     
     // Atributos.
     @Column(name = "Curso")
-    private String curso;
+    public String curso;
 
     @Column(name = "CPF")
-    private String cpf;
+    public String cpf;
 
     @Column(name = "Notas")
-    private ArrayList<String> notas = new ArrayList<String>();
+    public ArrayList<String> notas = new ArrayList<String>();
 
     @Column(name = "Status")
     private boolean statusCurso = true;
