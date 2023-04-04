@@ -102,7 +102,7 @@ public class alunoController {
     @PostMapping("/alterar_aluno")
     public ModelAndView alterar_alunos(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
-            @RequestParam("list") String notas, @RequestParam("bool") boolean status) {
+            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status) {
         ModelAndView mv = new ModelAndView();
         Aluno aluno = new Aluno();
         aluno.setAcademicalInfo(curso);
@@ -113,6 +113,10 @@ public class alunoController {
         String[] new_notas = notas.split(";");
         for (int i = 0; i < new_notas.length; i++) {
             aluno.setList(new_notas[i]);
+        }
+        String[] new_notas_pagas = pagas.split(";");
+        for (int i = 0; i < new_notas_pagas.length; i++) {
+            aluno.setDisciplinasPagas(new_notas_pagas[i]);
         }
         repo.save(aluno);
         mv.setViewName("redirect:/list_aluno");

@@ -37,7 +37,7 @@ public class historicoAnalitico extends Aluno{
             if (Double.parseDouble(separador[1]) < 7.0) {
                 status = "Reprovado";
             }
-            list.add(separador[0] + " | Carga Horaria: "+ 72 +" | Nota Final: " + separador[1] + " Status: "+ status);
+            list.add(separador[0] + " | Carga Horaria: "+ 72 +" | Nota Final: " + separador[1] + " | Status: "+ status);
         }
         return list;
     }
