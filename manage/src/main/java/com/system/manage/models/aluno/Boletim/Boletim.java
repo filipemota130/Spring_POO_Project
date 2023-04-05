@@ -24,7 +24,7 @@ public class Boletim extends Aluno {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < this.notas.size(); i++) {
             String[] separador = this.notas.get(i).split(":");
-            list.add( separador[0] + " ------ " +separador[1] );
+            list.add(separador[0] + " ------ " +" Nota:" + separador[1]);
         }
         return list;
     }
