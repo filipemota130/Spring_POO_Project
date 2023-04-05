@@ -21,9 +21,8 @@
                 </div>
             </div>
             <div class="bg-dark text-white my-4 p-4 rounded">
-                <div class="my-5" style="list-style: none;" th:each="notas : ${boletim.getList()}">
+                <div class="my-5" th:each="notas : ${boletim.getList()}">
                     <div th:text="*{notas}" class="bg-secondary p-3 text-white list-group-item list-group-item-action text-center rounded">
-
                     </div>
                 </div>
             </div>
