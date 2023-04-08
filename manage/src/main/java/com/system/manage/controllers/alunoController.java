@@ -73,7 +73,7 @@ public class alunoController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/Boletim_page");
         Aluno aluno = repo.getReferenceById(id);
-        Boletim bole = new Boletim();
+        Aluno bole = new Boletim();
         bole.setId(id);
         for (int i = 0; i < aluno.getList().size(); i++) {
             bole.setList(aluno.getList().get(i));
@@ -88,12 +88,15 @@ public class alunoController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/Historico_page");
         Aluno aluno = repo.getReferenceById(id);
-        historicoAnalitico histo = new historicoAnalitico();
+        Aluno histo = new historicoAnalitico();
         histo.setId(id);
         for (int i = 0; i < aluno.getDisciplinasPagas().size(); i++) {
             histo.setDisciplinasPagas(aluno.getDisciplinasPagas().get(i));
         }
-        histo.setCoeficiente(aluno.getDisciplinasPagas());
+        if (histo instanceof historicoAnalitico) {
+            ((historicoAnalitico) histo).setCoeficiente(aluno.getDisciplinasPagas());
+        }
+        
         mv.addObject("aluno", aluno);
         mv.addObject("historico", histo);
         return mv;
