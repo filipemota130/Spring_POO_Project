@@ -10,6 +10,10 @@
 </head>
 
 <body onload="checaCookie()" style="height: 10rem; align-items: center; justify-content: center;">
+    <div th:if="${id_existente}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> Id inválido
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <h5 class="text-center mt-5">Sistema de Gerenciamento de Entidades</h5>
     <h3 class="text-center mt-5">Cadastro de Entidades</h3>
     <div class="d-flex justify-content-center p-4 mb-5">
@@ -20,6 +24,7 @@
         </div>
     </div>
     <h3 class="text-center">Listagem de Entidades</h3>
+    
     <div class="d-flex justify-content-center p-4">
         <div>
             <a th:href="@{list_aluno}"><button class="btn btn-primary mx-3">Lista de Alunos</button></a>

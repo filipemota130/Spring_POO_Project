@@ -1,7 +1,9 @@
 package com.system.manage.controllers;
 
+import org.hibernate.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,24 +32,34 @@ public class alunoController {
     @PostMapping("aluno_form")
     public ModelAndView cadastro_aluno(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
-            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status) {
+            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
         Aluno savior = new Aluno();
-        savior.setId(id);
-        savior.setNome(nome);
-        savior.setAcademicalInfo(curso);
-        savior.setCode(cpf);
-        String[] new_notas = notas.split(";");
-        for (int i = 0; i < new_notas.length; i++) {
-            savior.setList(new_notas[i]);
+        try {
+            if (repo.getReferenceById(id) != null) {
+                mv.addObject("id_existente");
+                return mv;
+            }
+            savior.setId(id);
+            savior.setNome(nome);
+            savior.setAcademicalInfo(curso);
+            savior.setCode(cpf);
+            String[] new_notas = notas.split(";");
+            for (int i = 0; i < new_notas.length; i++) {
+                savior.setList(new_notas[i]);
+            }
+            String[] new_notas_pagas = pagas.split(";");
+            for (int i = 0; i < new_notas_pagas.length; i++) {
+                savior.setDisciplinasPagas(new_notas_pagas[i]);
+            }
+            savior.setBool(status);
+            repo.save(savior);
         }
-        String[] new_notas_pagas = pagas.split(";");
-        for (int i = 0; i < new_notas_pagas.length; i++) {
-            savior.setDisciplinasPagas(new_notas_pagas[i]);
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
         }
-        savior.setBool(status);
-        repo.save(savior);
         return mv;
     }
 
@@ -96,7 +108,6 @@ public class alunoController {
         if (histo instanceof historicoAnalitico) {
             ((historicoAnalitico) histo).setCoeficiente(aluno.getDisciplinasPagas());
         }
-        
         mv.addObject("aluno", aluno);
         mv.addObject("historico", histo);
         return mv;
