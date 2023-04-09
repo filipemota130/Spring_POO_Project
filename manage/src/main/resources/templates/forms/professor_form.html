@@ -19,14 +19,14 @@
         <form method="post" action="/professor_form" th:object="${prof}">
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Nome completo"/>
+                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" required/>
                 </div>            
                 <label>CPF</label>
                 <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101"/>
+                    <input class='form-control' name="id" type="number" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" required/>
                 </div>
                 <label>FORMAÇÃO</label>
-                <select class="input-group" name="academic" type="text">
+                <select class="input-group" name="academic" type="text" required>
                     <option value="">--Selecione o nível de formação--</option>
                     <option value="Mestrado">Mestrado</option>
                     <option value="Doutorado">Doutorado</option>
@@ -34,20 +34,12 @@
                 </select>
                 <label>LECIONANDO</label>
                 <div class="input-group">
-                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..."/>
+                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..." required/>
                 </div>
                 <label>ATUAÇÃO</label>
-                <script>
-                    function onlyOne(checkbox) {
-                        var checkboxes = document.getElementsByName('bool')
-                        checkboxes.forEach((item) => {
-                            if (item !== checkbox) item.checked = false
-                        })
-                    }
-                </script>
                 <div type="input-group">
-                    <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Ativo(a) </label>
-                    <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Afastado(a) </label>
+                    <input type="radio" name="bool" value=true required> Ativo(a) </label>
+                    <input type="radio" name="bool" value=false required> Afastado(a) </label>
                 </div>
                 <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>

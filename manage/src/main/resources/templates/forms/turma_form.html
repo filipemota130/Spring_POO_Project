@@ -19,34 +19,26 @@
         <form method="post" action="/turma_form" th:object="${turma}">
                 <label>ID</label>
                 <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123"/>
+                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123" required/>
                 </div>                
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I"/>
+                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" required/>
                 </div>            
                 <label>PROFESSOR RESPONSÁVEL</label>
-                <input class='form-control' name="academic" type="text" placeholder="Nome completo" />
+                <input class='form-control' name="academic" type="text" placeholder="Nome completo" required/>
                 <label>ALUNOS</label>
                 <div class="input-group">
-                    <input class='form-control' name="list" type="text" placeholder="Ex.: Aluno; aluno; ..."/>
+                    <input class='form-control' name="list" type="text" placeholder="Ex.: Aluno; aluno; ..." required/>
                 </div>
                 <label>HORÁRIO</label>
                 <div class="input-group">
-                    <input class='form-control' name="code" type="text" placeholder="Ex.: dia/n:nn-n:nn; ..."/>
+                    <input class='form-control' name="code" type="text" placeholder="Ex.: dia/n:nn-n:nn; ..." required/>
                 </div>
                 <label>EXISTÊNCIA DE MONITOR(ES)</label>
-                <script>
-                    function onlyOne(checkbox) {
-                        var checkboxes = document.getElementsByName('bool')
-                        checkboxes.forEach((item) => {
-                            if (item !== checkbox) item.checked = false
-                        })
-                    }
-                </script>
                 <div type="input-group">
-                    <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Existe(m) </label>
-                    <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Não existe(m) </label>
+                    <input type="radio" name="bool" value=true required> Existe(m) </label>
+                    <input type="radio" name="bool" value=false required> Não existe(m) </label>
                 </div>
                 <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
