@@ -14,6 +14,8 @@ import com.system.manage.models.aluno.Boletim.Boletim;
 import com.system.manage.models.aluno.HistoricoAnalitico.historicoAnalitico;
 import com.system.manage.repositories.alunoRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Controller
 public class alunoController {
 
@@ -31,8 +33,10 @@ public class alunoController {
     @PostMapping("aluno_form")
     public ModelAndView cadastro_aluno(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
-            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status){
+            @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
+            @RequestParam("bool") boolean status) {
         ModelAndView mv = new ModelAndView();
+
         mv.setViewName("home/index");
             
         try {
@@ -55,8 +59,7 @@ public class alunoController {
                 savior.setDisciplinasPagas(new_notas_pagas[i]);
             }
             savior.setBool(status);
-            repo.save(savior);
-            
+            repo.save(savior);      
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
@@ -83,6 +86,7 @@ public class alunoController {
     @GetMapping(value = "/alterar_aluno/{id}")
     public ModelAndView alterar_alunos(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
+
         try {
             mv.setViewName("forms/alterar_aluno_page");
             Aluno aluno = repo.getReferenceById(id);
@@ -92,12 +96,17 @@ public class alunoController {
             mv.setViewName("home/500");
             return mv;
         }
+        catch (EntityNotFoundException e) {
+            mv.setViewName("home/404");
+            return mv;
+        }
         return mv;
     }
 
     @GetMapping(value = "/boletim_aluno/{id}")
     public ModelAndView boletim_alunos(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
+
         mv.setViewName("home/Boletim_page");
         try {
             Aluno aluno = repo.getReferenceById(id);
@@ -108,15 +117,19 @@ public class alunoController {
             }
             mv.addObject("aluno", aluno);
             mv.addObject("boletim", bole);
+
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
         }
-        
+        catch (EntityNotFoundException e) {
+            mv.setViewName("home/404");
+            return mv;
+        }
         return mv;
     }
-    
+
     @GetMapping(value = "/historico_aluno/{id}")
     public ModelAndView historico_alunos(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
@@ -138,13 +151,18 @@ public class alunoController {
             mv.setViewName("home/500");
             return mv;
         }
+        catch (EntityNotFoundException e) {
+            mv.setViewName("home/404");
+            return mv;
+        }
         return mv;
     }
 
     @PostMapping("/alterar_aluno")
     public ModelAndView alterar_alunos(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
-            @RequestParam("list") String notas, @RequestParam("pagas") String pagas, @RequestParam("bool") boolean status) {
+            @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
+            @RequestParam("bool") boolean status) {
         ModelAndView mv = new ModelAndView();
         try {
             Aluno aluno = new Aluno();
