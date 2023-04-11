@@ -8,7 +8,7 @@ import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Modelo{
-    
+
     @Id
     @Column(name = "id")
     private Integer id;

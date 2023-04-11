@@ -2,6 +2,7 @@ package com.system.manage.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,48 +33,85 @@ public class turmaController {
             @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
-        Turma savior = new Turma();
-        savior.setId(id);
-        savior.setNome(nome);
-        savior.setAcademicalInfo(professor);
-        savior.setCode(horarios);
-        String[] new_alunos = alunos.split(";");
-        for (int i = 0; i < new_alunos.length; i++) {
-            savior.setList(new_alunos[i]);
+        try{
+            if (repo.findById(id).isPresent() == true) {
+                mv.addObject("id_existente", true);
+                return mv;
+            }
+            
+            Turma savior = new Turma();
+            savior.setId(id);
+            savior.setNome(nome);
+            savior.setAcademicalInfo(professor);
+            savior.setCode(horarios);
+            String[] new_alunos = alunos.split(";");
+            for (int i = 0; i < new_alunos.length; i++) {
+                savior.setList(new_alunos[i]);
+            }
+            savior.setBool(monitor);
+            repo.save(savior);
         }
-        savior.setBool(monitor);
-        repo.save(savior);
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
         return mv;
     }
 
     @GetMapping("/list_turma")
     public ModelAndView listagemTurmas() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("home/Turma_List");
-        mv.addObject("turmasList", repo.findAll());
+        try{
+            mv.setViewName("home/Turma_List");
+            mv.addObject("turmasList", repo.findAll());
+        }
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
         return mv;
     }
 
         @GetMapping(value="/alterar_turma/{id}")
     public ModelAndView alterar(@PathVariable("id") Integer id) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("forms/alterar_turma_page");
-        Turma turma = repo.getReferenceById(id);
-        mv.addObject("turma", turma);
+        try{
+            mv.setViewName("forms/alterar_turma_page");
+            Turma turma = repo.getReferenceById(id);
+            mv.addObject("turma", turma);
+        }
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
         return mv;
     }
 
         @PostMapping("/alterar_turma")
     public ModelAndView alterar(Turma turma) {
         ModelAndView mv = new ModelAndView();
-        repo.save(turma);
-        mv.setViewName("redirect:/list_turma");
+        try{
+            repo.save(turma);
+            mv.setViewName("redirect:/list_turma");
+        }
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        
         return mv;
     }
 
     @GetMapping("/remover_turma/{id}")
-    public String excluirTurma(@PathVariable("id") Integer id) {
-        repo.deleteById(id);
-        return "redirect:/list_turma";
+    public ModelAndView excluirTurma(@PathVariable("id") Integer id) {
+        ModelAndView mv = new ModelAndView();
+        try{
+            repo.deleteById(id);
+        }
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
     }
 }
