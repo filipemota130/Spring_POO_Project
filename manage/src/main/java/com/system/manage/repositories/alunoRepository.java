@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.system.manage.models.aluno.Aluno;
 
-public interface alunoRepository extends JpaRepository<Aluno,Integer> {
+public interface alunoRepository extends JpaRepository<Aluno,Long> {
     
 }

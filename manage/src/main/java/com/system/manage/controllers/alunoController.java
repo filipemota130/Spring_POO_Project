@@ -31,7 +31,7 @@ public class alunoController {
     }
 
     @PostMapping("aluno_form")
-    public ModelAndView cadastro_aluno(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
+    public ModelAndView cadastro_aluno(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
             @RequestParam("bool") boolean status) {
@@ -84,9 +84,8 @@ public class alunoController {
     }
 
     @GetMapping(value = "/alterar_aluno/{id}")
-    public ModelAndView alterar_alunos(@PathVariable("id") Integer id) {
+    public ModelAndView alterar_alunos(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
-
         try {
             mv.setViewName("forms/alterar_aluno_page");
             Aluno aluno = repo.getReferenceById(id);
@@ -104,9 +103,8 @@ public class alunoController {
     }
 
     @GetMapping(value = "/boletim_aluno/{id}")
-    public ModelAndView boletim_alunos(@PathVariable("id") Integer id) {
+    public ModelAndView boletim_alunos(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
-
         mv.setViewName("home/Boletim_page");
         try {
             Aluno aluno = repo.getReferenceById(id);
@@ -131,7 +129,7 @@ public class alunoController {
     }
 
     @GetMapping(value = "/historico_aluno/{id}")
-    public ModelAndView historico_alunos(@PathVariable("id") Integer id) {
+    public ModelAndView historico_alunos(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try {
             mv.setViewName("home/Historico_page");
@@ -158,8 +156,8 @@ public class alunoController {
         return mv;
     }
 
-    @PostMapping("/alterar_aluno")
-    public ModelAndView alterar_alunos(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
+    @PostMapping("/alterar_alunos")
+    public ModelAndView alterar_alunos(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
             @RequestParam("bool") boolean status) {
@@ -186,12 +184,11 @@ public class alunoController {
             mv.setViewName("home/500");
             return mv;
         }
-        
         return mv;
     }
 
     @GetMapping("/remover_aluno/{id}")
-    public ModelAndView excluirAluno(@PathVariable("id") Integer id) {
+    public ModelAndView excluirAluno(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try {
             mv.setViewName("redirect:/list_aluno");
@@ -201,7 +198,10 @@ public class alunoController {
             mv.setViewName("home/500");
             return mv;
         }
-
+        catch (EntityNotFoundException e) {
+            mv.setViewName("home/404");
+            return mv;
+        }
         return mv;
     }
 

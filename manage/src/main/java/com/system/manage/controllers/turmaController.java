@@ -28,7 +28,7 @@ public class turmaController {
     }
 
     @PostMapping("turma_form")
-    public ModelAndView cadastro_turma(@RequestParam("id") Integer id, @RequestParam("nome") String nome,
+    public ModelAndView cadastro_turma(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String professor, @RequestParam("list") String alunos,
             @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
         ModelAndView mv = new ModelAndView();
@@ -73,7 +73,7 @@ public class turmaController {
     }
 
         @GetMapping(value="/alterar_turma/{id}")
-    public ModelAndView alterar(@PathVariable("id") Integer id) {
+    public ModelAndView alterar(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try{
             mv.setViewName("forms/alterar_turma_page");
@@ -103,7 +103,7 @@ public class turmaController {
     }
 
     @GetMapping("/remover_turma/{id}")
-    public ModelAndView excluirTurma(@PathVariable("id") Integer id) {
+    public ModelAndView excluirTurma(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try{
             repo.deleteById(id);
