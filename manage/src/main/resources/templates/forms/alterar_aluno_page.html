@@ -16,47 +16,39 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/alterar_aluno">
+        <form method="post" action="/alterar_aluno" th:object="${aluno}">
             <input type="hidden" th:field="*{id}"/>
             <label>NOME</label>
             <div class="input-group">
-                <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="${aluno.nome}"/>
+                <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}" required/>
             </div>
             <label>MATRÍCULA</label>
             <div class="input-group">
-                <input class='form-control' readonly="readonly" name="id" type="number" placeholder="Edição desabilitada" th:field="${aluno.id}"/>
+                <input class='form-control' readonly="readonly" name="id" type="number" placeholder="Edição desabilitada" th:field="*{id}" required/>
             </div>            
             <label>CPF</label>
             <div class="input-group">
-                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101"/>
+                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" th:field="*{code}" required/>
             </div>
             <label>NOTAS</label>
             <div class="input-group">
-                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ..." required>
             </div>
             <label>DISCIPLINAS PAGAS</label>
             <div class="input-group">
-                <input class='form-control' name="pagas" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                <input class='form-control' name="pagas" type="text" placeholder="disciplina:n; disciplina:n; ..." required>
             </div>
             <label>CURSO</label>
-            <select class="input-group" name="academic" type="text">
+            <select class="input-group" name="academic" type="text" required>
                 <option value="">--Selecione o curso--</option>
                 <option value="CC">Ciência da Computação</option>
                 <option value="EC">Engenharia da Computação</option>
                 <option value="SI">Sistemas de Informação</option>
             </select>
             <label>STATUS DO CURSO</label>
-            <script>
-                function onlyOne(checkbox) {
-                    var checkboxes = document.getElementsByName('bool')
-                    checkboxes.forEach((item) => {
-                        if (item !== checkbox) item.checked = false
-                    })
-                }
-            </script>
             <div type="input-group">
-                <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Ativo </label>
-                <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Trancado </label>
+                <input type="radio" name="bool" value=true required> Ativo </label>
+                <input type="radio" name="bool" value=false required> Trancado </label>
             </div>
             <button type="submit" class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>

@@ -20,18 +20,18 @@
         <form method="post" action="/aluno_form" th:object="${aluno}">
             <label>NOME</label>
             <div class="input-group">
-                <input class='form-control' name="nome" type="text" placeholder="Nome completo"/>
+                <input class='form-control' name="nome" type="text" placeholder="Nome completo" required/>
             </div>
             <label>MATRÍCULA</label>
             <div class="input-group">
-                <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123"/>
+                <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123" required/>
             </div>            
             <label>CPF</label>
             <div class="input-group">
-                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101"/>
+                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" required/>
             </div>
             <label>CURSO</label>
-            <select class="input-group" name="academic" type="text">
+            <select class="input-group" name="academic" type="text" required>
                 <option value="">--Selecione o curso--</option>
                 <option value="CC">Ciência da Computação</option>
                 <option value="EC">Engenharia da Computação</option>
@@ -39,16 +39,16 @@
             </select>
             <label>NOTAS</label>
             <div class="input-group">
-                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ..." required>
             </div>
             <label>DISCIPLINAS PAGAS</label>
             <div class="input-group">
-                <input class='form-control' name="pagas" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                <input class='form-control' name="pagas" type="text" placeholder="disciplina:n; disciplina:n; ..." required>
             </div>
             <label>STATUS DO CURSO</label>
             <div type="input-group">
-                <input type="radio" name="bool" value=true required>Ativo</label>
-                <input type="radio" name="bool" value=false required>Trancado</label>
+                <input type="radio" name="bool" value=true required> Ativo </label>
+                <input type="radio" name="bool" value=false required> Trancado </label>
             </div>
             <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>

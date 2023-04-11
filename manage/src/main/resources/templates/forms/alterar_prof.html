@@ -20,28 +20,20 @@
             <input type="hidden" th:field="*{id}" />
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}"/>
+                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}" required/>
                 </div>            
                 <label>CPF</label>
                 <div class="input-group">
-                    <input readonly="readonly" class='form-control' th:field="*{id}" name="id" type="number" placeholder="Edição desabilitada"/>
+                    <input readonly="readonly" class='form-control' th:field="*{id}" name="id" type="number" placeholder="Edição desabilitada" required/>
                 </div>
                 <label>LECIONANDO</label>
                 <div class="input-group">
-                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..."/>
+                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..." required/>
                 </div>
                 <label>ATUAÇÃO</label>
-                <script>
-                    function onlyOne(checkbox) {
-                        var checkboxes = document.getElementsByName('bool')
-                        checkboxes.forEach((item) => {
-                            if (item !== checkbox) item.checked = false
-                        })
-                    }
-                </script>
                 <div type="input-group">
-                    <input type="checkbox" name="bool" value=true onclick="onlyOne(this)"> Ativo(a) </label>
-                    <input type="checkbox" name="bool" value=false onclick="onlyOne(this)"> Afastado(a) </label>
+                    <input type="radio" name="bool" value=true required> Ativo(a) </label>
+                    <input type="radio" name="bool" value=false required> Afastado(a) </label>
                 </div>
                 <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
