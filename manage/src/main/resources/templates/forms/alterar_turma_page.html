@@ -17,17 +17,15 @@
     </h1>
     <div class="container center mt-5">
         <form method="post" action="/alterar_turma" th:object="${turma}">
-            <input type="hidden" th:field="*{id}"/>
-                <label>ID</label>
-                <div class="input-group">
-                    <input readonly="readonly" class='form-control' name="id" type="number" placeholder="Edição desabilitada" th:field="*{id}" required/>
-                </div>                
+            <input type="hidden" th:field="*{id}"/>              
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" th:field="*{nome}" required/>
+                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" required/>
                 </div>            
                 <label>PROFESSOR RESPONSÁVEL</label>
-                <input class='form-control' name="academic" type="text" placeholder="Nome completo" required/>
+                <div class="input-group">
+                    <input class='form-control' name="academic" type="text" placeholder="Nome completo" required/>
+                </div>
                 <label>ALUNOS</label>
                 <div class="input-group">
                     <input class='form-control' name="list" type="text" placeholder="Ex.: Aluno; aluno; ..." required/>

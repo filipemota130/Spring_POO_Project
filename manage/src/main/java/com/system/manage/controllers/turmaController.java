@@ -38,7 +38,7 @@ public class turmaController {
                 mv.addObject("id_existente", true);
                 return mv;
             }
-            
+            mv.addObject("id_existente", false);
             Turma savior = new Turma();
             savior.setId(id);
             savior.setNome(nome);
@@ -88,17 +88,32 @@ public class turmaController {
     }
 
         @PostMapping("/alterar_turma")
-    public ModelAndView alterar(Turma turma) {
+    public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
+            @RequestParam("academic") String professor, @RequestParam("list") String alunos,
+            @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
         ModelAndView mv = new ModelAndView();
-        try{
-            repo.save(turma);
-            mv.setViewName("redirect:/list_turma");
-        }
-        catch (CannotCreateTransactionException e) {
+        try {
+            if (repo.findById(id).isPresent() == true) {
+                mv.setViewName("home/index");
+                mv.addObject("nao_existente", true);
+                return mv;
+            }
+            mv.addObject("nao_existente", false);
+            Turma savior = new Turma();
+            savior.setId(id);
+            savior.setNome(nome);
+            savior.setAcademicalInfo(professor);
+            savior.setCode(horarios);
+            String[] new_alunos = alunos.split(";");
+            for (int i = 0; i < new_alunos.length; i++) {
+                savior.setList(new_alunos[i]);
+            }
+            savior.setBool(monitor);
+            repo.save(savior);
+        } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
         }
-        
         return mv;
     }
 

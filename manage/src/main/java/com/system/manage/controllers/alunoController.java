@@ -38,13 +38,12 @@ public class alunoController {
         ModelAndView mv = new ModelAndView();
 
         mv.setViewName("home/index");
-            
         try {
             if (repo.findById(id).isPresent() == true) {
                 mv.addObject("id_existente", true);
                 return mv;
             }
-
+            mv.addObject("id_existente", false);
             Aluno savior = new Aluno();
             savior.setId(id);
             savior.setNome(nome);
@@ -71,7 +70,6 @@ public class alunoController {
     @GetMapping("/list_aluno")
     public ModelAndView listagemAlunos() {
         ModelAndView mv = new ModelAndView();
-        
         try { 
             mv.setViewName("home/Aluno_List");
             mv.addObject("alunosList", repo.findAll());
@@ -84,12 +82,13 @@ public class alunoController {
     }
 
     @GetMapping(value = "/alterar_aluno/{id}")
-    public ModelAndView alterar_alunos(@PathVariable("id") Long id) {
+    public ModelAndView alterar_alunos(@PathVariable("id") Long id){
         ModelAndView mv = new ModelAndView();
         try {
-            mv.setViewName("forms/alterar_aluno_page");
             Aluno aluno = repo.getReferenceById(id);
             mv.addObject("aluno", aluno);
+            mv.setViewName("forms/alterar_aluno_page");
+            return mv;
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
@@ -99,7 +98,6 @@ public class alunoController {
             mv.setViewName("home/404");
             return mv;
         }
-        return mv;
     }
 
     @GetMapping(value = "/boletim_aluno/{id}")
@@ -162,7 +160,14 @@ public class alunoController {
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
             @RequestParam("bool") boolean status) {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/list_aluno");
         try {
+            if (repo.findById(id).isPresent() == false) {
+                mv.setViewName("home/index");
+                mv.addObject("nao_existente", true);
+                return mv;
+            }
+            mv.addObject("nao_existente", false);
             Aluno aluno = new Aluno();
             aluno.setAcademicalInfo(curso);
             aluno.setBool(status);
@@ -178,7 +183,6 @@ public class alunoController {
                 aluno.setDisciplinasPagas(new_notas_pagas[i]);
             }
             repo.save(aluno);
-            mv.setViewName("redirect:/list_aluno");
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");

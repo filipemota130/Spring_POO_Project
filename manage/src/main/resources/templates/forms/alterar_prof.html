@@ -16,16 +16,19 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/alterar" th:object="${prof}" autocomplete="off">
+        <form method="post" action="/alterar" th:object="${prof}">
             <input type="hidden" th:field="*{id}" />
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}" required/>
+                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" required/>
                 </div>            
-                <label>CPF</label>
-                <div class="input-group">
-                    <input readonly="readonly" class='form-control' th:field="*{id}" name="id" type="number" placeholder="Edição desabilitada" required/>
-                </div>
+                <label>FORMAÇÃO</label>
+                <select class="input-group" name="academic" type="text" required>
+                    <option value="">--Selecione o nível de formação--</option>
+                    <option value="Mestrado">Mestrado</option>
+                    <option value="Doutorado">Doutorado</option>
+                    <option value="Pós-doutorado">Pós-doutorado</option>
+                </select>
                 <label>LECIONANDO</label>
                 <div class="input-group">
                     <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..." required/>

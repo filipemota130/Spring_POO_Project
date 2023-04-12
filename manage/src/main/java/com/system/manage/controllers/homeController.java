@@ -27,7 +27,6 @@ public class homeController {
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
-        mv.addObject("msg", "check");
         return mv;
     }
 

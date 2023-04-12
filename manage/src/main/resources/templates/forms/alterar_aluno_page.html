@@ -20,15 +20,11 @@
             <input type="hidden" th:field="*{id}"/>
             <label>NOME</label>
             <div class="input-group">
-                <input class='form-control' name="nome" type="text" placeholder="Nome completo" th:field="*{nome}" required/>
-            </div>
-            <label>MATRÍCULA</label>
-            <div class="input-group">
-                <input class='form-control' readonly="readonly" name="id" type="number" placeholder="Edição desabilitada" th:field="*{id}" required/>
-            </div>            
+                <input class='form-control' name="nome" type="text" placeholder="Nome completo" required/>
+            </div>         
             <label>CPF</label>
             <div class="input-group">
-                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" th:field="*{code}" required/>
+                <input class='form-control' name="code" type="text" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" required/>
             </div>
             <label>NOTAS</label>
             <div class="input-group">
