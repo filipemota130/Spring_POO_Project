@@ -81,7 +81,6 @@ public class professorController {
             mv.setViewName("home/500");
             return mv;
         }
-
         return mv;
     }
 

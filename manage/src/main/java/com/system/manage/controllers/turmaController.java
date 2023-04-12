@@ -90,11 +90,11 @@ public class turmaController {
     @PostMapping("/alterar_turma")
     public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String professor, @RequestParam("list") String alunos,
-            @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
+            @RequestParam("code") String horarios, @RequestParam("bool") Boolean monitor) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/list_turma");
         try {
-            if (repo.findById(id).isPresent() == true) {
+            if (repo.findById(id).isPresent() == false) {
                 mv.setViewName("home/index");
                 mv.addObject("nao_existente", true);
                 return mv;

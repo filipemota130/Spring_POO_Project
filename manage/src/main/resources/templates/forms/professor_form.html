@@ -20,11 +20,11 @@
         <form method="post" action="/professor_form" th:object="${prof}">
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" maxLength="255" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
+                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" maxlength="255" required/>
                 </div>            
                 <label>CPF</label>
                 <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" maxLength="11" minLength="11" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
+                    <input class='form-control' name="id" type="number" placeholder="Número inteiro, 11 dígitos. Ex.: 10101010101" min="11" max="11" required/>
                 </div>
                 <label>FORMAÇÃO</label>
                 <select class="input-group" name="academic" type="text" required>

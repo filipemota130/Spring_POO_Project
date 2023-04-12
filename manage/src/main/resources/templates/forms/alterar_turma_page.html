@@ -18,7 +18,7 @@
     </h1>
     <div class="container center mt-5">
         <form method="post" action="/alterar_turma" th:object="${turma}">
-            <input type="hidden" th:field="*{id}"/>              
+                <input type="hidden" th:field="*{id}"/>              
                 <label>NOME</label>
                 <div class="input-group">
                     <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" maxLength="255" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
