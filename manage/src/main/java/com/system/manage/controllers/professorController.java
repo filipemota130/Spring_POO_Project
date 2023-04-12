@@ -90,6 +90,7 @@ public class professorController {
             @RequestParam("academic") String formacao, @RequestParam("list") String disc,
             @RequestParam("bool") Boolean status) {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/list_prof");
         try {
             if (repo.findById(id).isPresent() == false) {
                 mv.setViewName("home/index");

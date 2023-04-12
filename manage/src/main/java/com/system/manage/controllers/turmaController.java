@@ -72,7 +72,7 @@ public class turmaController {
         return mv;
     }
 
-        @GetMapping(value="/alterar_turma/{id}")
+    @GetMapping(value="/alterar_turma/{id}")
     public ModelAndView alterar(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try{
@@ -87,11 +87,12 @@ public class turmaController {
         return mv;
     }
 
-        @PostMapping("/alterar_turma")
+    @PostMapping("/alterar_turma")
     public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String professor, @RequestParam("list") String alunos,
             @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/list_turma");
         try {
             if (repo.findById(id).isPresent() == true) {
                 mv.setViewName("home/index");

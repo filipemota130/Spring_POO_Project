@@ -21,25 +21,38 @@ public class historicoAnalitico extends Aluno{
     }
 
     public void setCoeficiente(ArrayList<String> notas) {
-        for (int i = 0; i < notas.size(); i++) {
-            String[] new_notas = notas.get(i).split(":");
-            this.coeficiente = this.coeficiente + Math.round(Double.parseDouble(new_notas[1]) * 72);
+        try{
+            for (int i = 0; i < notas.size(); i++) {
+                        String[] new_notas = notas.get(i).split(":");
+                        this.coeficiente = this.coeficiente + Math.round(Double.parseDouble(new_notas[1]) * 72);
+                    }
+            this.coeficiente = (this.coeficiente / (72*notas.size()));
         }
-        this.coeficiente = (this.coeficiente / (72*notas.size()));
+        catch (ArrayIndexOutOfBoundsException e) {
+            this.coeficiente = -1;
+        }
+        catch (NumberFormatException e) {
+            this.coeficiente = -1;
+        }
     }
 
     @Override
     public ArrayList<String> getList() {
         ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < this.Disciplinas_Pagas.size(); i++) {
-            String[] separador = this.Disciplinas_Pagas.get(i).split(":");
-            String status = "Aprovado";
-            if (Double.parseDouble(separador[1]) < 7.0) {
-                status = "Reprovado";
+        try{
+            for (int i = 0; i < this.Disciplinas_Pagas.size(); i++) {
+                String[] separador = this.Disciplinas_Pagas.get(i).split(":");
+                String status = "Aprovado";
+                if (Double.parseDouble(separador[1]) < 7.0) {
+                    status = "Reprovado";
+                }
+                list.add(separador[0] + " | Carga Horaria: "+ 72 +" | Nota Final: " + separador[1] + " | Status: "+ status);
             }
-            list.add(separador[0] + " | Carga Horaria: "+ 72 +" | Nota Final: " + separador[1] + " | Status: "+ status);
+            return list; 
         }
-        return list;
+        catch (Exception e) {
+            list.add("Erro, formato das notas inválido!!");
+            return list;
+        }   
     }
-
 }

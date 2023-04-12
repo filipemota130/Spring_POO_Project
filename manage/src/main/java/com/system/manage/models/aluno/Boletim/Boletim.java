@@ -22,10 +22,16 @@ public class Boletim extends Aluno {
     @Override
     public ArrayList<String> getList() {
         ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < this.notas.size(); i++) {
-            String[] separador = this.notas.get(i).split(":");
-            list.add(separador[0] + " ------ " +" Nota:" + separador[1]);
+        try{
+            for (int i = 0; i < this.notas.size(); i++) {
+                String[] separador = this.notas.get(i).split(":");
+                list.add(separador[0] + " ------ " +" Nota:" + separador[1]);
+            }
+            return list; 
         }
-        return list;
+        catch (Exception e) {
+            list.add("Erro, formato da nota inválido!!");
+            return list;
+        }
     }
 }
