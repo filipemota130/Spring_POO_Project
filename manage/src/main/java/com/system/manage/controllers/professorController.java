@@ -121,6 +121,7 @@ public class professorController {
         ModelAndView mv = new ModelAndView();
         try {
             repo.deleteById(id);
+            mv.setViewName("redirect:/list_prof");
         } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;

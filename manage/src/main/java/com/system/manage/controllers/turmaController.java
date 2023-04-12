@@ -123,6 +123,7 @@ public class turmaController {
         ModelAndView mv = new ModelAndView();
         try{
             repo.deleteById(id);
+            mv.setViewName("redirect:/list_turma");
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");

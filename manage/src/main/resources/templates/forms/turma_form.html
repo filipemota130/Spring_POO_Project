@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+
 <body>
     <h1>
         <center>
@@ -19,11 +20,11 @@
         <form method="post" action="/turma_form" th:object="${turma}">
                 <label>ID</label>
                 <div class="input-group">
-                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123" required/>
+                    <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123" maxLength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
                 </div>                
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" required/>
+                    <input class='form-control' name="nome" type="text" placeholder="Ex.: Turma I" maxLength="255" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
                 </div>            
                 <label>PROFESSOR RESPONSÁVEL</label>
                 <input class='form-control' name="academic" type="text" placeholder="Nome completo" required/>
@@ -52,4 +53,5 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
