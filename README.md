@@ -30,10 +30,6 @@
 	Modelo.java existem métodos com nomes pouco descritivos ao e que divergem do seu propósito exemplo: get e set Code, get e set List, get e set Bool, get e set AcademicalInfo
   </li>
   <li>
-  - Speculative Generality<br>
-	Modelo.java existem métodos com nomes pouco descritivos ao e que divergem do seu propósito exemplo: get e set Code, get e set List, get e set Bool, get e set AcademicalInfo
-  </li>
-  <li>
   - Dead Code:<br>
 	Modelo.java existe o método ver_info() que não é mais usado<br>
 	Boletim.java existe o método get_identificador() e setId() que não é usado
