@@ -35,7 +35,7 @@
   </li>
   <li>
   - Dead Code:<br>
-	Modelo.java existe o método ver_info() que não é mais usado
+	Modelo.java existe o método ver_info() que não é mais usado<br>
 	Boletim.java existe o método get_identificador() e setId() que não é usado
   </li>
   <li>
