@@ -14,6 +14,7 @@
   <li> 
   	- Primitive Obsession:
  	<br>
+	As classes abaixo possuem um método para armazenar listas de notas de forma muito primitiva, tratando-as apenas como strings:
   	- Aluno.java:
 		@Column(name = "Notas")
     		public ArrayList<String> notas = new ArrayList<String>();
