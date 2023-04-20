@@ -17,7 +17,8 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/turma_form" th:object="${turma}">
+        <form method="post" action="/CriareAlterarTurma" th:object="${turma}">
+            <input type="hidden" name="form" value="criar" />
                 <label>ID</label>
                 <div class="input-group">
                     <input class='form-control' name="id" type="number" placeholder="Número inteiro. Ex.: 123" maxLength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>

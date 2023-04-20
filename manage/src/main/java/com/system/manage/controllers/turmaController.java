@@ -29,35 +29,44 @@ public class turmaController {
 
     // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
     // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
-    @PostMapping("turma_form")
-    public ModelAndView cadastro_turma(@RequestParam("id") Long id, @RequestParam("nome") String nome,
-            @RequestParam("academic") String professor, @RequestParam("list") String alunos,
-            @RequestParam("code") String horarios, @RequestParam("bool") boolean monitor) {
+    @PostMapping("/CriareAlterarTurma")
+    public ModelAndView CriareAlterarTurma(@RequestParam("id") Long id, @RequestParam("nome") String nome,
+    @RequestParam("academic") String professor, @RequestParam("list") String alunos,
+    @RequestParam("code") String horarios, @RequestParam("bool") Boolean monitor, @RequestParam("form") String form_type) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("home/index");
-        try{
-            if (repo.findById(id).isPresent() == true) {
-                mv.addObject("id_existente", true);
+        mv.setViewName("redirect:/list_turma");
+        try {
+            if (form_type.equals("alterar")) {
+                if (repo.findById(id).isPresent() == false) {
+                    mv.setViewName("home/index");
+                    mv.addObject("nao_existente", true);
+                    return mv;
+                }
+                mv.addObject("nao_existente", false);
+            } else {
+                if (repo.findById(id).isPresent() == false) {
+                    mv.setViewName("home/index");
+                    mv.addObject("nao_existente", true);
+                    return mv;
+                }
+            }
+            mv.addObject("nao_existente", false);
+        Turma turma = new Turma();
+        turma.setId(id);
+        turma.setNome(nome);
+        turma.setAcademicalInfo(professor);
+        turma.setCode(horarios);
+        String[] new_alunos = alunos.split(";");
+        for (int i = 0; i < new_alunos.length; i++) {
+            turma.setList(new_alunos[i]);
+        }
+        turma.setBool(monitor);
+        repo.save(turma);
+        } catch (CannotCreateTransactionException e) {
+                mv.setViewName("home/500");
                 return mv;
             }
-            mv.addObject("id_existente", false);
-            Turma savior = new Turma();
-            savior.setId(id);
-            savior.setNome(nome);
-            savior.setAcademicalInfo(professor);
-            savior.setCode(horarios);
-            String[] new_alunos = alunos.split(";");
-            for (int i = 0; i < new_alunos.length; i++) {
-                savior.setList(new_alunos[i]);
-            }
-            savior.setBool(monitor);
-            repo.save(savior);
-        }
-        catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
             return mv;
-        }
-        return mv;
     }
 
     @GetMapping("/list_turma")
@@ -81,38 +90,6 @@ public class turmaController {
             mv.setViewName("forms/alterar_turma_page");
             Turma turma = repo.getReferenceById(id);
             mv.addObject("turma", turma);
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
-    }
-
-    //MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
-    @PostMapping("/alterar_turma")
-    public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
-            @RequestParam("academic") String professor, @RequestParam("list") String alunos,
-            @RequestParam("code") String horarios, @RequestParam("bool") Boolean monitor) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/list_turma");
-        try {
-            if (repo.findById(id).isPresent() == false) {
-                mv.setViewName("home/index");
-                mv.addObject("nao_existente", true);
-                return mv;
-            }
-            mv.addObject("nao_existente", false);
-            Turma savior = new Turma();
-            savior.setId(id);
-            savior.setNome(nome);
-            savior.setAcademicalInfo(professor);
-            savior.setCode(horarios);
-            String[] new_alunos = alunos.split(";");
-            for (int i = 0; i < new_alunos.length; i++) {
-                savior.setList(new_alunos[i]);
-            }
-            savior.setBool(monitor);
-            repo.save(savior);
         } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;

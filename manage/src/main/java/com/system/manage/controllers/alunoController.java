@@ -43,8 +43,10 @@ public class alunoController {
         return mv;
     }
     
-    @PostMapping("/CriareAlterar")
-    public ModelAndView CriareAlterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
+    // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
+    // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)   
+    @PostMapping("/CriareAlterarAluno")
+    public ModelAndView CriareAlterarAluno(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
             @RequestParam("bool") boolean status, @RequestParam("form") String form_type) {
@@ -60,6 +62,7 @@ public class alunoController {
                 mv.addObject("nao_existente", false);
             } else {
                 if (repo.findById(id).isPresent() == true) {
+                    mv.setViewName("home/index");
                     mv.addObject("id_existente", true);
                     return mv;
                 }

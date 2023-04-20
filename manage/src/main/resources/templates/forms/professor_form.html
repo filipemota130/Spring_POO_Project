@@ -17,7 +17,8 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/professor_form" th:object="${prof}">
+        <form method="post" action="/CriareAlterarProf" th:object="${prof}">
+            <input type="hidden" name="form" value="criar" />
                 <label>NOME</label>
                 <div class="input-group">
                     <input class='form-control' name="nome" type="text" placeholder="Nome completo" maxlength="255" required/>
