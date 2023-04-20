@@ -17,7 +17,8 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/aluno_form" th:object="${aluno}">
+        <form method="post" action="/CriareAlterar" th:object="${aluno}">
+            <input type="hidden" name="form" value="criar"/>
             <label>NOME</label>
             <div class="input-group">
                 <input class='form-control' name="nome" type="text" placeholder="Nome completo" maxLength="255" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required />

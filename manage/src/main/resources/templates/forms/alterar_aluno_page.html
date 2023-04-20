@@ -17,7 +17,8 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/alterar_alunos" th:object="${aluno}">
+        <form method="post" action="/CriareAlterar" th:object="${aluno}">
+            <input type="hidden" name="form" value="alterar" />
             <input type="hidden" th:field="*{id}" />
             <label>NOME</label>
             <div class="input-group">

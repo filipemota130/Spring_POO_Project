@@ -11,7 +11,7 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Aluno extends Modelo {
+public class Aluno extends Modelo{
     
     // Atributos.
     @Column(name = "Curso")

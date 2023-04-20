@@ -26,6 +26,8 @@ public class professorController {
         return mv;
     }
 
+    // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
+    // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("professor_form")
     public ModelAndView cadastro_professor(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String formacao, @RequestParam("list") String disc,
@@ -84,13 +86,15 @@ public class professorController {
         return mv;
     }
 
+    // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
+    // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("/alterar")
     public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String formacao, @RequestParam("list") String disc,
             @RequestParam("bool") Boolean status) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/list_prof");
-        try {
+        try{
             if (repo.findById(id).isPresent() == false) {
                 mv.setViewName("home/index");
                 mv.addObject("nao_existente", true);
@@ -108,7 +112,7 @@ public class professorController {
             }
             savior.setBool(status);
             repo.save(savior);
-        } catch (CannotCreateTransactionException e) {
+        }catch (CannotCreateTransactionException e){
             mv.setViewName("home/500");
             return mv;
         }

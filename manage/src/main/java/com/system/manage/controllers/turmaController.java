@@ -27,6 +27,8 @@ public class turmaController {
         return mv;
     }
 
+    // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
+    // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("turma_form")
     public ModelAndView cadastro_turma(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String professor, @RequestParam("list") String alunos,
@@ -75,18 +77,18 @@ public class turmaController {
     @GetMapping(value="/alterar_turma/{id}")
     public ModelAndView alterar(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
-        try{
+        try {
             mv.setViewName("forms/alterar_turma_page");
             Turma turma = repo.getReferenceById(id);
             mv.addObject("turma", turma);
-        }
-        catch (CannotCreateTransactionException e) {
+        } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
         }
         return mv;
     }
 
+    //MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("/alterar_turma")
     public ModelAndView alterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String professor, @RequestParam("list") String alunos,
