@@ -50,42 +50,34 @@ public class alunoController {
             @RequestParam("bool") boolean status, @RequestParam("form") String form_type) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/list_aluno");
-        try {
-            if (form_type.equals("alterar")) {
-                if (repo.findById(id).isPresent() == false) {
-                    mv.setViewName("home/index");
-                    mv.addObject("nao_existente", true);
-                    return mv;
-                }
-                mv.addObject("nao_existente", false);
-            } else {
-                if (repo.findById(id).isPresent() == true) {
-                    mv.addObject("id_existente", true);
-                    return mv;
-                }
-                mv.addObject("id_existente", false);
+        if (form_type.equals("alterar")) {
+            if (repo.findById(id).isPresent() == false) {
+                mv.setViewName("home/index");
+                mv.addObject("nao_existente", true);
+                return mv;
             }
-            Aluno aluno = new Aluno();
-            aluno.setAcademicalInfo(curso);
-            aluno.setBool(status);
-            aluno.setId(id);
-            aluno.setNome(nome);
-            aluno.setCode(cpf);
-            String[] new_notas = notas.split(";");
-            for (int i = 0; i < new_notas.length; i++) {
-                aluno.setList(new_notas[i]);
+            mv.addObject("nao_existente", false);
+        } 
+        else {
+            if (repo.findById(id).isPresent() == true) {
+                mv.setViewName("home/index");
+                mv.addObject("id_existente", true);
+                return mv;
             }
-            String[] new_notas_pagas = pagas.split(";");
-            for (int i = 0; i < new_notas_pagas.length; i++) {
-                aluno.setDisciplinasPagas(new_notas_pagas[i]);
-            }
-            repo.save(aluno);
-        } catch (CannotCreateTransactionException e) {
+            mv.addObject("id_existente", false);
+        }
+        RegistrarAlunoCommand registrar = new RegistrarAlunoCommand();
+        Aluno alunox = registrar.CreateInstance(id, nome, curso, cpf, notas, pagas, status);
+        String result = registrar.executar(alunox);
+        if (result.equals("Aluno Criado/Alterado!")) {
+            mv.setViewName("redirect:/list_aluno");
+        }
+        else {
             mv.setViewName("home/500");
-            return mv;
+            mv.addObject("erro", result);
         }
         return mv;
-    }
+    } 
     
     @GetMapping(value = "/alterar_aluno/{id}")
     public ModelAndView alterar_alunos(@PathVariable("id") Long id){
