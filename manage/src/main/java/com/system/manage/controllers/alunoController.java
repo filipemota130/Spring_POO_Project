@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.system.manage.command.RegistrarAlunoCommand;
 import com.system.manage.models.aluno.Aluno;
 import com.system.manage.models.aluno.Boletim.Boletim;
 import com.system.manage.models.aluno.HistoricoAnalitico.historicoAnalitico;
@@ -43,52 +44,38 @@ public class alunoController {
         return mv;
     }
     
-    // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
-    // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)   
-    @PostMapping("/CriareAlterarAluno")
-    public ModelAndView CriareAlterarAluno(@RequestParam("id") Long id, @RequestParam("nome") String nome,
+    @PostMapping("/CriareAlterar")
+    public ModelAndView CriareAlterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
-            @RequestParam("bool") boolean status, @RequestParam("form") String form_type) {
+            @RequestParam("bool") boolean status, @RequestParam("form") String form_type, Object Aluno) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/list_aluno");
-        try {
-            if (form_type.equals("alterar")) {
-                if (repo.findById(id).isPresent() == false) {
-                    mv.setViewName("home/index");
-                    mv.addObject("nao_existente", true);
-                    return mv;
-                }
-                mv.addObject("nao_existente", false);
-            } else {
-                if (repo.findById(id).isPresent() == true) {
-                    mv.setViewName("home/index");
-                    mv.addObject("id_existente", true);
-                    return mv;
-                }
-                mv.addObject("id_existente", false);
+        mv.setViewName("home/index");
+        if (form_type.equals("alterar")) {
+            if (repo.findById(id).isPresent() == false) {
+                mv.setViewName("home/index");
+                mv.addObject("nao_existente", true);
+                return mv;
             }
-            Aluno aluno = new Aluno();
-            aluno.setAcademicalInfo(curso);
-            aluno.setBool(status);
-            aluno.setId(id);
-            aluno.setNome(nome);
-            aluno.setCode(cpf);
-            String[] new_notas = notas.split(";");
-            for (int i = 0; i < new_notas.length; i++) {
-                aluno.setList(new_notas[i]);
+            mv.addObject("nao_existente", false);
+        } 
+        else {
+            if (repo.findById(id).isPresent() == true) {
+                mv.setViewName("home/index");
+                mv.addObject("id_existente", true);
+                return mv;
             }
-            String[] new_notas_pagas = pagas.split(";");
-            for (int i = 0; i < new_notas_pagas.length; i++) {
-                aluno.setDisciplinasPagas(new_notas_pagas[i]);
-            }
-            repo.save(aluno);
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
+            mv.addObject("id_existente", false);
         }
+        Aluno alunox = new Aluno();
+        alunox.CreateInstance(id, nome, curso, cpf, notas, pagas, status);
+        RegistrarAlunoCommand registrar = new RegistrarAlunoCommand(alunox);
+        registrar.executar(repo);
+ 
+        //repo.save(alunox);
+        
         return mv;
-    }
+    } 
     
     @GetMapping(value = "/alterar_aluno/{id}")
     public ModelAndView alterar_alunos(@PathVariable("id") Long id){

@@ -68,5 +68,22 @@ public class Aluno extends Modelo{
     public void setDisciplinasPagas(String disciplinasPaga) {
         this.Disciplinas_Pagas.add(disciplinasPaga);
     }
-
+    public Aluno CreateInstance(Long id,String nome, String curso, String cpf, String notas,String pagas,
+            boolean status) {
+        Aluno aluno = new Aluno();
+        aluno.setAcademicalInfo(curso);
+        aluno.setBool(status);
+        aluno.setId(id);
+        aluno.setNome(nome);
+        aluno.setCode(cpf);
+        String[] new_notas = notas.split(";");
+        for (int i = 0; i < new_notas.length; i++) {
+            aluno.setList(new_notas[i]);
+        }
+        String[] new_notas_pagas = pagas.split(";");
+        for (int i = 0; i < new_notas_pagas.length; i++) {
+            aluno.setDisciplinasPagas(new_notas_pagas[i]);
+        }
+        return aluno;
+    }
 }
