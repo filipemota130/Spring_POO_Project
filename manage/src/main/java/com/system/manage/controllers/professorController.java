@@ -26,6 +26,33 @@ public class professorController {
         return mv;
     }
 
+    @GetMapping("/list_prof")
+    public ModelAndView listagemProfs() {
+        ModelAndView mv = new ModelAndView();
+        try {
+            mv.setViewName("home/Prof_List");
+            mv.addObject("professoresList", repo.findAll());
+        } catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
+    }
+
+    @GetMapping("/alterar/{id}")
+    public ModelAndView alterar(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView();
+        try {
+            mv.setViewName("forms/alterar_prof");
+            Professor prof = repo.getReferenceById(id);
+            mv.addObject("prof", prof);
+        } catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
+    }
+
     // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
     // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("/CriareAlterarProf")
@@ -61,33 +88,6 @@ public class professorController {
             }
             professor.setBool(status);
             repo.save(professor);
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
-    }
-
-    @GetMapping("/list_prof")
-    public ModelAndView listagemProfs() {
-        ModelAndView mv = new ModelAndView();
-        try {
-            mv.setViewName("home/Prof_List");
-            mv.addObject("professoresList", repo.findAll());
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
-    }
-
-    @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView();
-        try {
-            mv.setViewName("forms/alterar_prof");
-            Professor prof = repo.getReferenceById(id);
-            mv.addObject("prof", prof);
         } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;

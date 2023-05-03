@@ -1,5 +1,5 @@
 package com.system.manage.command;
 
-public interface Command <T>{
-    abstract String executar(T a);
+public interface Command<T> {
+    abstract void execute(T a);
 }

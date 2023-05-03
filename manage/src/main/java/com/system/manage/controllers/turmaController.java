@@ -27,6 +27,34 @@ public class turmaController {
         return mv;
     }
 
+    @GetMapping("/list_turma")
+    public ModelAndView listagemTurmas() {
+        ModelAndView mv = new ModelAndView();
+        try{
+            mv.setViewName("home/Turma_List");
+            mv.addObject("turmasList", repo.findAll());
+        }
+        catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
+    }
+
+    @GetMapping(value="/alterar_turma/{id}")
+    public ModelAndView alterar(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView();
+        try {
+            mv.setViewName("forms/alterar_turma_page");
+            Turma turma = repo.getReferenceById(id);
+            mv.addObject("turma", turma);
+        } catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
+    }
+
     // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
     // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("/CriareAlterarTurma")
@@ -69,40 +97,12 @@ public class turmaController {
             return mv;
     }
 
-    @GetMapping("/list_turma")
-    public ModelAndView listagemTurmas() {
-        ModelAndView mv = new ModelAndView();
-        try{
-            mv.setViewName("home/Turma_List");
-            mv.addObject("turmasList", repo.findAll());
-        }
-        catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
-    }
-
-    @GetMapping(value="/alterar_turma/{id}")
-    public ModelAndView alterar(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView();
-        try {
-            mv.setViewName("forms/alterar_turma_page");
-            Turma turma = repo.getReferenceById(id);
-            mv.addObject("turma", turma);
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
-    }
-
     @GetMapping("/remover_turma/{id}")
     public ModelAndView excluirTurma(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
-        try{
-            repo.deleteById(id);
+        try {
             mv.setViewName("redirect:/list_turma");
+            repo.deleteById(id);
         }
         catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
