@@ -128,14 +128,16 @@ public class alunoController{
     }
 
 
-    @PostMapping("/CriareAlterarAluno")
-    public ModelAndView CriareAlterar(@RequestParam("id") Long id, @RequestParam("nome") String nome,
+    @PostMapping("/registrar_aluno")
+    public ModelAndView RegistrarAluno(@RequestParam("id") Long id, @RequestParam("nome") String nome,
             @RequestParam("academic") String curso, @RequestParam("code") String cpf,
             @RequestParam("list") String notas, @RequestParam("pagas") String pagas,
             @RequestParam("bool") boolean status, @RequestParam("form") String form_type){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("home/index");
-        if (form_type.equals("alterar")) {
+        
+        try{
+            if (form_type.equals("alterar")) {
             if (repo.findById(id).isPresent() == false) {
                 mv.setViewName("home/index");
                 mv.addObject("nao_existente", true);
@@ -151,10 +153,10 @@ public class alunoController{
             }
             mv.addObject("id_existente", false);
         }
-        try{
-            RegistrarAlunoCommand RegistrarAlunoCommand = new RegistrarAlunoCommand(id, nome, curso, cpf, notas, pagas, status);
-            setCommand(RegistrarAlunoCommand);
-            CommandSelected();
+
+        Command <alunoRepository> RegistrarAlunoCommand = new RegistrarAlunoCommand(id, nome, curso, cpf, notas, pagas, status);
+        setCommand(RegistrarAlunoCommand);
+        CommandSelected();
         }
         catch(CannotCreateTransactionException e){
             mv.setViewName("home/500");
@@ -168,7 +170,7 @@ public class alunoController{
         ModelAndView mv = new ModelAndView();
         try {
             mv.setViewName("redirect:/list_aluno");
-            DeletarAlunoCommand DeletarAlunoCommand = new DeletarAlunoCommand(id);
+            Command<alunoRepository> DeletarAlunoCommand = new DeletarAlunoCommand(id);
             setCommand(DeletarAlunoCommand);
             CommandSelected();
         }

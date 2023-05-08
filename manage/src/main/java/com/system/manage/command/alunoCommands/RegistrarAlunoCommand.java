@@ -17,7 +17,6 @@ public class RegistrarAlunoCommand implements Command<alunoRepository>{
         this.aluno.setId(id);
         this.aluno.setNome(nome);
         this.aluno.setAcademicalInfo(curso);
-        this.aluno.setAcademicalInfo(curso);
         this.aluno.setBool(status);
         this.aluno.setCode(cpf);
         String[] new_notas = notas.split(";");

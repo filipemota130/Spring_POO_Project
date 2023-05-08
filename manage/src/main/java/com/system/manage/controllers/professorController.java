@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.system.manage.command.Command;
+import com.system.manage.command.professorCommands.DeletarProfessorCommand;
+import com.system.manage.command.professorCommands.RegistrarProfessorCommand;
 import com.system.manage.models.professor.Professor;
 import com.system.manage.repositories.professorRepository;
 
@@ -18,6 +21,16 @@ public class professorController {
     @Autowired
     professorRepository repo;
 
+    Command<professorRepository> slot;
+
+    public void setCommand(Command<professorRepository> comando) {
+        this.slot = comando;
+    }
+
+    public void CommandSelected(){
+        slot.execute(this.repo);
+    }
+    
     @GetMapping("/professor")
     public ModelAndView professor_form(Professor professor) {
         ModelAndView mv = new ModelAndView();
@@ -39,7 +52,7 @@ public class professorController {
         return mv;
     }
 
-    @GetMapping("/alterar/{id}")
+    @GetMapping("/alterar_professor/{id}")
     public ModelAndView alterar(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try {
@@ -55,7 +68,7 @@ public class professorController {
 
     // MELHORAR A FORMA DE PEGAR OS CAMPOS DO OBJETO NO PARÂMETRO DA FUNÇÃO (TENTAR
     // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
-    @PostMapping("/CriareAlterarProf")
+    @PostMapping("/registrar_professor")
     public ModelAndView CriareAlterarProf(@RequestParam("id") Long id, @RequestParam("nome") String nome,
     @RequestParam("academic") String formacao, @RequestParam("list") String disc,
     @RequestParam("bool") Boolean status, @RequestParam("form") String form_type) {
@@ -77,17 +90,10 @@ public class professorController {
                 }
                 mv.addObject("id_existente", false);
             }
-            Professor professor = new Professor();
-            professor.setId(id);
-            professor.setNome(nome);
-            professor.setAcademicalInfo(formacao);
-            professor.setCode(Long.toString(id));
-            String[] new_disc = disc.split(";");
-            for (int i = 0; i < new_disc.length; i++) {
-                professor.setList(new_disc[i]);
-            }
-            professor.setBool(status);
-            repo.save(professor);
+            Command <professorRepository> RegistrarProfessorCommand = new RegistrarProfessorCommand(id, nome, formacao, disc, status);
+            setCommand(RegistrarProfessorCommand);
+            CommandSelected();
+
         } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
@@ -95,12 +101,14 @@ public class professorController {
         return mv;
     }
 
-    @GetMapping("/remover/{id}")
+    @GetMapping("/remover_professor/{id}")
     public ModelAndView excluirProfessor(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView();
         try {
-            repo.deleteById(id);
             mv.setViewName("redirect:/list_prof");
+            Command<professorRepository> DeletarAlunoCommand = new DeletarProfessorCommand(id);
+            setCommand(DeletarAlunoCommand);
+            CommandSelected();
         } catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
