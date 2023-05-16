@@ -154,7 +154,7 @@ public class alunoController{
             mv.addObject("id_existente", false);
         }
 
-        Command <alunoRepository> RegistrarAlunoCommand = new RegistrarAlunoCommand(id, nome, curso, cpf, notas, pagas, status);
+        Command<alunoRepository> RegistrarAlunoCommand = new RegistrarAlunoCommand(id, nome, curso, cpf, notas, pagas, status);
         setCommand(RegistrarAlunoCommand);
         CommandSelected();
         }
