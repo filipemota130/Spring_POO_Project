@@ -68,5 +68,4 @@ public class Aluno extends Modelo{
     public void setDisciplinasPagas(String disciplinasPaga) {
         this.Disciplinas_Pagas.add(disciplinasPaga);
     }
-
 }

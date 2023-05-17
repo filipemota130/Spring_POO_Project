@@ -32,15 +32,6 @@ public abstract class Modelo{
         return nome;
     }
 
-    public ArrayList<String> Ver_info() {
-        ArrayList<String> ver_info = new ArrayList<String>();
-        ver_info.add(Long.toString(getId()));
-        ver_info.add(getNome());
-        ver_info.add(getCode());
-        ver_info.add(getAcademicalInfo());
-        return ver_info;
-    }
-
     public abstract String getAcademicalInfo();
 
     public abstract void setAcademicalInfo(String E);
@@ -52,9 +43,5 @@ public abstract class Modelo{
     public abstract ArrayList<String> getList();
 
     public abstract void setList(String E);
-
-    public abstract boolean getBool();
-
-    public abstract void setBool(boolean E);
 
 }

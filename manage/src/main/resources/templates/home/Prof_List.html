@@ -37,16 +37,21 @@
                         <td th:text="${professores.getList()}">
 
                         </td>
-                        <td th:text="${professores.getBool()} ? 'Ativo':'Afastado' ">
+                        <td th:text="${professores.getBool()}">
 
                         </td>
                         <td>
-                            <a th:href="@{alterar/{id}(id=${professores.id})}">
+                            <a th:href="@{info_professor/{id}(id=${professores.id})}">
+                                <button class="btn btn-primary">
+                                    Info
+                                </button>
+                            </a>
+                            <a th:href="@{alterar_professor/{id}(id=${professores.id})}">
                                 <button class="btn btn-warning">
                                     Editar
                                 </button>
                             </a>
-                            <a th:href="@{remover/{id}(id=${professores.id})}">
+                            <a th:href="@{remover_professor/{id}(id=${professores.id})}">
                                 <button class="btn btn-danger">
                                     Remover
                                 </button>

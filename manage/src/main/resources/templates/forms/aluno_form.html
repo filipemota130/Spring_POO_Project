@@ -17,7 +17,7 @@
         </center>
     </h1>
     <div class="container center mt-5">
-        <form method="post" action="/CriareAlterarAluno" th:object="${aluno}">
+        <form method="post" action="/registrar_aluno" th:object="${aluno}">
             <input type="hidden" name="form" value="criar"/>
             <label>NOME</label>
             <div class="input-group">
@@ -50,20 +50,20 @@
                 <option value="EC">Engenharia da Computação</option>
                 <option value="SI">Sistemas de Informação</option>
             </select>
-            <label>NOTAS</label>
-            <div class="input-group">
-                <input class='form-control' name="list" type="text" placeholder="disciplina:n; disciplina:n; ..."
-                    required>
+            <div id="teste" style="display: block;">
+                <label>NOTAS</label>
+                <div class="input-group">
+                    <input class='form-control' name="list" id="input2" type="text" placeholder="disciplina:n; disciplina:n; ...">
+                </div>
             </div>
             <label>DISCIPLINAS PAGAS</label>
-            <div class="input-group">
-                <input class='form-control' name="pagas" type="text" placeholder="disciplina:n; disciplina:n; ..."
-                    required>
+            <div class="input-group mb-3" >
+                <input class='form-control' name="pagas" id="input1" type="text" placeholder="disciplina:n; disciplina:n; ...">
             </div>
-            <label>STATUS DO CURSO</label>
-            <div type="input-group">
-                <input type="radio" name="bool" value=true required> Ativo </label>
-                <input type="radio" name="bool" value=false required> Trancado </label>
+            <label>STATUS DE MATRICULA</label>
+            <div class="input-group mb-3">
+                <input type="radio" id="ativar" name="bool" value=true required> Ativo </label>
+                <input type="radio" id="trancar" name="bool" value=false required> Trancado </label>
             </div>
             <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
@@ -73,6 +73,18 @@
             </button>
         </a>
     </div>
+    <script>
+
+        document.getElementById("trancar").addEventListener("click", function(){
+            var campo = document.getElementById("input2");
+            campo.setAttribute("readonly", true);
+        })
+
+        document.getElementById("ativar").addEventListener("click", function () {
+                var campo = document.getElementById("input2");
+                campo.removeAttribute("readonly");
+        })
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
