@@ -13,15 +13,19 @@ public class RegistrarProfessorCommand implements Command<professorRepository>{
     @Autowired
     professorRepository repo;
 
-    public RegistrarProfessorCommand(Long id, String nome, String formacao, String disciplinas, boolean status) {
+    public RegistrarProfessorCommand(Long id, String nome, String formacao, String disciplinas, String status) {
         this.professor.setId(id);
         this.professor.setNome(nome);
         this.professor.setAcademicalInfo(formacao);
         this.professor.setBool(status);
-        //this.professor.setCode(cpf);
-        String[] new_disciplinas = disciplinas.split(";");
-        for (int i = 0; i < new_disciplinas.length; i++) {
-            this.professor.setList(new_disciplinas[i]);
+        if (disciplinas.length() <= 0 || disciplinas.equals("---Professor Afastado---")) {
+            this.professor.setList("");
+        }
+        else {
+            String[] new_disciplinas = disciplinas.split(";");
+            for (int i = 0; i < new_disciplinas.length; i++) {
+                this.professor.setList(new_disciplinas[i]);
+            }
         }
     }
 

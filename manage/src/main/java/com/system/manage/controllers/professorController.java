@@ -13,11 +13,12 @@ import com.system.manage.command.Command;
 import com.system.manage.command.professorCommands.DeletarProfessorCommand;
 import com.system.manage.command.professorCommands.RegistrarProfessorCommand;
 import com.system.manage.models.professor.Professor;
+import com.system.manage.models.professor.Professor_Afastado.Professor_Afastado;
+import com.system.manage.models.professor.Professor_Orientador.Professor_Orientador;
 import com.system.manage.repositories.professorRepository;
 
 @Controller
 public class professorController {
-
     @Autowired
     professorRepository repo;
 
@@ -27,29 +28,8 @@ public class professorController {
         this.slot = comando;
     }
 
-    public void CommandSelected(){
+    public void CommandSelected() {
         slot.execute(this.repo);
-    }
-    
-    @GetMapping("/professor")
-    public ModelAndView professor_form(Professor professor) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("forms/professor_form");
-        mv.addObject("prof", new Professor());
-        return mv;
-    }
-
-    @GetMapping("/list_prof")
-    public ModelAndView listagemProfs() {
-        ModelAndView mv = new ModelAndView();
-        try {
-            mv.setViewName("home/Prof_List");
-            mv.addObject("professoresList", repo.findAll());
-        } catch (CannotCreateTransactionException e) {
-            mv.setViewName("home/500");
-            return mv;
-        }
-        return mv;
     }
 
     @GetMapping("/alterar_professor/{id}")
@@ -58,8 +38,36 @@ public class professorController {
         try {
             mv.setViewName("forms/alterar_prof");
             Professor prof = repo.getReferenceById(id);
+            if (prof.getBool().equals("Afastado")) {
+                prof = new Professor_Afastado();
+                prof.setId(id);
+            }
+            else if (prof.getBool().equals("Orientador")) {
+                prof = new Professor_Orientador();
+                prof.setId(id);
+            }
             mv.addObject("prof", prof);
         } catch (CannotCreateTransactionException e) {
+            mv.setViewName("home/500");
+            return mv;
+        }
+        return mv;
+    }
+
+    @GetMapping("/info_professor/{id}")
+    public ModelAndView info(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView();
+        try{
+            mv.setViewName("home/ProfessorInfos");
+            Professor prof = repo.getReferenceById(id);
+            if (prof.getBool().equals("Afastado")) {
+                prof = new Professor_Afastado();
+            }
+            else if (prof.getBool().equals("Orientador")){
+                prof = new Professor_Orientador();
+            }
+            mv.addObject("prof", prof);
+        }catch (CannotCreateTransactionException e) {
             mv.setViewName("home/500");
             return mv;
         }
@@ -70,8 +78,8 @@ public class professorController {
     // PASSAR COMO PARÂMETRO O OBJETO COMPLETO AO INVÉS DE TODOS OS ATRIBUTOS)
     @PostMapping("/registrar_professor")
     public ModelAndView CriareAlterarProf(@RequestParam("id") Long id, @RequestParam("nome") String nome,
-    @RequestParam("academic") String formacao, @RequestParam("list") String disc,
-    @RequestParam("bool") Boolean status, @RequestParam("form") String form_type) {
+            @RequestParam("academic") String formacao, @RequestParam("list") String disc,
+            @RequestParam("status") String status, @RequestParam("form") String form_type) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/list_prof");
         try {
@@ -90,7 +98,8 @@ public class professorController {
                 }
                 mv.addObject("id_existente", false);
             }
-            Command <professorRepository> RegistrarProfessorCommand = new RegistrarProfessorCommand(id, nome, formacao, disc, status);
+            Command<professorRepository> RegistrarProfessorCommand = new RegistrarProfessorCommand(id, nome,
+                    formacao, disc, status);
             setCommand(RegistrarProfessorCommand);
             CommandSelected();
 
@@ -115,5 +124,4 @@ public class professorController {
         }
         return mv;
     }
-
 }

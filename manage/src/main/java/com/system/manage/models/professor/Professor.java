@@ -2,16 +2,19 @@ package com.system.manage.models.professor;
 
 import java.util.ArrayList;
 
-import com.system.manage.models.modelo.Modelo;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Id;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Professor extends Modelo {
+public class Professor{
+
+    @Id
+    @Column(name = "id")
+    public Long id;
+
+    @Column(name = "nome")
+    public String nome;
 
     @Column(name = "formacao")
     private String formacao;
@@ -19,26 +22,42 @@ public class Professor extends Modelo {
     @Column(name = "CPF")
     private String cpf;
 
-    @Column(name = "Disciplinas")
-    private ArrayList<String> lecionando = new ArrayList<String>();
+    @Column(name = "Lista")
+    public ArrayList<String> lista = new ArrayList<String>();
 
     @Column(name = "Status")
-    private boolean atuacao;
+    private String atuacao;
 
-    public boolean getBool() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getBool() {
         return atuacao;
     }
 
-    public void setBool(boolean atuacao) {
+    public void setBool(String atuacao) {
         this.atuacao = atuacao;
     }
 
     public ArrayList<String> getList() {
-        return lecionando;
+        return lista;
     }
 
     public void setList(String disc) {
-        this.lecionando.add(disc);
+        this.lista.add(disc);
     }
 
     public String getCode() {

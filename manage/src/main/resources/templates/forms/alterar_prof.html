@@ -18,10 +18,10 @@
     <div class="container center mt-5">
         <form method="post" action="/registrar_professor" th:object="${prof}">
             <input type="hidden" name="form" value="alterar" />
-            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{id}"/>
                 <label>NOME</label>
                 <div class="input-group">
-                    <input class='form-control' name="nome" type="text" placeholder="Nome completo" maxLength="255" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
+                    <input class='form-control' th:value="${prof.nome}" name="nome" type="text" placeholder="Nome completo" maxLength="255" required/>
                 </div>            
                 <label>FORMAÇÃO</label>
                 <select class="input-group" name="academic" type="text" required>
@@ -30,14 +30,17 @@
                     <option value="Doutorado">Doutorado</option>
                     <option value="Pós-doutorado">Pós-doutorado</option>
                 </select>
-                <label>LECIONANDO</label>
-                <div class="input-group">
-                    <input class='form-control' name="list" type="text" placeholder="Matéria; matéria; ..." required/>
+                <div>
+                    <label>LECIONANDO</label>
+                    <div class="input-group">
+                        <input class='form-control' th:value="${prof.getCode()}" id='input1' name="list" type="text" placeholder="Matéria; matéria; ..." required/>
+                    </div>
                 </div>
                 <label>ATUAÇÃO</label>
                 <div type="input-group">
-                    <input type="radio" name="bool" value=true required> Ativo(a) </label>
-                    <input type="radio" name="bool" value=false required> Afastado(a) </label>
+                    <input type="radio" id="AT" name="status" value="Ativo" required> Ativo(a) </label>
+                    <input type="radio" id="AF" name="status" value="Afastado" required> Afastado(a) </label>
+                    <input type="radio" id="OR" name="status" value="Orientador" required> Orientador(a) </label>
                 </div>
                 <button class="btn btn-success mt-3 ms-auto">Enviar</button>
         </form>
@@ -47,6 +50,25 @@
             </button>
         </a>
     </div>
+        <script>
+            document.getElementById("AT").addEventListener("click", function () {
+                var campo = document.getElementById("input1");
+                campo.removeAttribute("readonly");
+                campo.required = true;
+            })
+
+            document.getElementById("AF").addEventListener("click", function () {
+                var campo = document.getElementById("input1");
+                campo.setAttribute("readonly", true);
+                campo.required = false;
+            })
+
+            document.getElementById("OR").addEventListener("click", function () {
+                var campo = document.getElementById("input1");
+                campo.setAttribute("readonly", true);
+                campo.required = false;
+            })
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
